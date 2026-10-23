@@ -6,17 +6,20 @@ Eight persistent mock providers: **Slack, Google Workspace, GitHub, Jira, Conflu
 
 ## Run locally
 
+For Cloudflare Workers, use the separate [Cloudflare deployment guide](docs/CLOUDFLARE.md).
+The Worker uses D1-backed demo state; the local server below uses SQLAlchemy/SQLite.
+
 Requires Python 3.10+ (verified with Python 3.12). From this project directory:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+pip install -r requirements-local.txt
 Copy-Item .env.example .env
 uvicorn app.main:app --reload
 ```
 
-If PowerShell blocks activation, use `.\.venv\Scripts\python.exe -m pip install -r requirements.txt` and `.\.venv\Scripts\python.exe -m uvicorn app.main:app --reload` instead. On macOS/Linux, activate with `source .venv/bin/activate` and copy with `cp .env.example .env`.
+If PowerShell blocks activation, use `.\.venv\Scripts\python.exe -m pip install -r requirements-local.txt` and `.\.venv\Scripts\python.exe -m uvicorn app.main:app --reload` instead. On macOS/Linux, activate with `source .venv/bin/activate` and copy with `cp .env.example .env`.
 
 Open **http://127.0.0.1:8000**. Interactive API documentation is at **http://127.0.0.1:8000/docs**. The database and synthetic seed data are created on startup. No Node build, SaaS credentials, or AI key is needed for the default demo.
 

@@ -4,3 +4,13 @@ __pycache__/
 *.db
 *.db-*
 .env
+.dev.vars
+.dev.vars.*
+.wrangler/
+.venv-workers/
+.uv-cache/
+public/
+node_modules/
+python_modules/
+.python-version
+worker-src/
