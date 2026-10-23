@@ -8,6 +8,14 @@ const icon = t => `<span class="tool-icon" style="background:${esc(t.color)}">${
 const badge = s => `<span class="badge ${esc(s)}">${esc(labels[s] || s)}</span>`;
 async function api(path, options = {}) {
   const response = await fetch(path, {headers:{'Content-Type':'application/json'}, ...options});
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    const text = await response.text();
+    if (text.includes('Worker exceeded resource limits')) {
+      throw new Error('The server reached its hosting resource limit. This request could not finish. Contact the demo owner before retrying.');
+    }
+    throw new Error(`The server returned an unexpected response (HTTP ${response.status}). Refresh and try again; if it continues, contact the demo owner.`);
+  }
   const data = await response.json();
   if (!response.ok) throw new Error(Array.isArray(data.detail) ? data.detail.map(e => `${e.loc.slice(1).join(' ')}: ${e.msg}`).join('; ') : data.detail || 'Request failed. Please retry.');
   return data;

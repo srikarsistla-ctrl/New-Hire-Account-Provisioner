@@ -78,11 +78,6 @@ version = "3.20"
 wheels = [{ url = "https://files.pythonhosted.org/packages/58/a2/bb081bab032533a855d44de1d56f8e8426114ff1ba5d1f07a438a0a654f8/idna-3.20-py3-none-any.whl", upload-time = 2026-09-17T14:11:03Z, size = 69583, hashes = { sha256 = "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c" } }]
 
 [[packages]]
-name = "jiter"
-version = "0.9.0"
-wheels = [{ url = "https://cdn.jsdelivr.net/pyodide/v0.28.3/full/jiter-0.9.0-cp313-cp313-pyodide_2025_0_wasm32.whl", hashes = { sha256 = "c4a69d4f4580c7c2d06967e83c48462c8bac5e5f4e227d05cf432d53e952512a" } }]
-
-[[packages]]
 name = "jsonpatch"
 version = "1.36"
 wheels = [{ url = "https://files.pythonhosted.org/packages/d9/c0/f2b34ce5fa98bde1bab4ff25f48064d09a078c40f4f53f65276a812d5e8a/jsonpatch-1.36-py3-none-any.whl", upload-time = 2026-10-19T10:59:19Z, size = 17094, hashes = { sha256 = "aa3ffbc15816644ffcc6b13712dacbc99f6f6dde302abc66983f9831d35630a5" } }]
@@ -98,11 +93,6 @@ version = "1.7.0"
 wheels = [{ url = "https://files.pythonhosted.org/packages/b3/d8/ed130e91cee0525cb47d185b98a5a6ffd6a8b660a100fbee43d887e745d6/langchain_core-1.7.0-py3-none-any.whl", upload-time = 2026-10-22T17:47:19Z, size = 574676, hashes = { sha256 = "e82b24d7ac51fc74874baa29d6b3c0b8234880d4f3d897f8ff57fb80dfd9b07d" } }]
 
 [[packages]]
-name = "langchain-openai"
-version = "1.1.9"
-wheels = [{ url = "https://files.pythonhosted.org/packages/52/a1/8a20d19f69d022c10d34afa42d972cc50f971b880d0eb4a828cf3dd824a8/langchain_openai-1.1.9-py3-none-any.whl", upload-time = 2026-02-10T21:03:20Z, size = 85769, hashes = { sha256 = "ca2482b136c45fb67c0db84a9817de675e0eb8fb2203a33914c1b7a96f273940" } }]
-
-[[packages]]
 name = "langchain-protocol"
 version = "0.0.20"
 wheels = [{ url = "https://files.pythonhosted.org/packages/02/4b/f1c99a0b27c5ff8b4b131c0d6e62012c17cc424089efe213767db927afd2/langchain_protocol-0.0.20-py3-none-any.whl", upload-time = 2026-10-20T11:13:49Z, size = 7347, hashes = { sha256 = "3c935e5e46b0f6f9cb52f45ba7cfa53d1b9fa80c82c4a277d47f03e07f7385b1" } }]
@@ -111,11 +101,6 @@ wheels = [{ url = "https://files.pythonhosted.org/packages/02/4b/f1c99a0b27c5ff8
 name = "langsmith"
 version = "0.14.12"
 wheels = [{ url = "https://files.pythonhosted.org/packages/c6/6c/33e2de8d8d809895263e4f24ef7619e5535e3ece7de863ffbe49c1b7a60d/langsmith-0.14.12-py3-none-any.whl", upload-time = 2026-10-21T20:16:20Z, size = 883644, hashes = { sha256 = "9dafba7f615afa77204dc8afbb9c803e4ba1b55e96249f12c8f9aafb23fae6d0" } }]
-
-[[packages]]
-name = "openai"
-version = "2.2.0"
-wheels = [{ url = "https://files.pythonhosted.org/packages/cb/92/6aeef1836e66dfec7f7f160a4f06d7041be7f6ccfc47a2f0f5738b332245/openai-2.2.0-py3-none-any.whl", upload-time = 2025-10-06T18:08:11Z, size = 998972, hashes = { sha256 = "d222e63436e33f3134a3d7ce490dc2d2f146fa98036eb65cc225df3ce163916f" } }]
 
 [[packages]]
 name = "opentelemetry-api"
@@ -152,11 +137,6 @@ version = "6.0.2"
 wheels = [{ url = "https://cdn.jsdelivr.net/pyodide/v0.28.3/full/pyyaml-6.0.2-cp313-cp313-pyodide_2025_0_wasm32.whl", hashes = { sha256 = "02c517acb78aa37b1ae95c964442f5f77ddf217ab8f76c1422fca52ffe4cb784" } }]
 
 [[packages]]
-name = "regex"
-version = "2024.11.6"
-wheels = [{ url = "https://cdn.jsdelivr.net/pyodide/v0.28.3/full/regex-2024.11.6-cp313-cp313-pyodide_2025_0_wasm32.whl", hashes = { sha256 = "7404d1b5686a79d52bbd556e5337bb81e3582ee94e4b3e3581dd5d7ff11a7348" } }]
-
-[[packages]]
 name = "requests"
 version = "2.34.2"
 wheels = [{ url = "https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl", upload-time = 2026-05-14T19:25:26Z, size = 73075, hashes = { sha256 = "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0" } }]
@@ -183,16 +163,6 @@ wheels = [{ url = "https://files.pythonhosted.org/packages/f3/93/181df62699d9b5a
 name = "tenacity"
 version = "9.2.1"
 wheels = [{ url = "https://files.pythonhosted.org/packages/d6/26/1ff2b0721ac66a3ec5b1402b333110b352ab0a8724052ac279a7b82d40c4/tenacity-9.2.1-py3-none-any.whl", upload-time = 2026-10-07T12:13:00Z, size = 32310, hashes = { sha256 = "9e56f17539296baab7beabb08b92f6ee3d7be92d8be72d763360677c2ad6580e" } }]
-
-[[packages]]
-name = "tiktoken"
-version = "0.9.0"
-wheels = [{ url = "https://cdn.jsdelivr.net/pyodide/v0.28.3/full/tiktoken-0.9.0-cp313-cp313-pyodide_2025_0_wasm32.whl", hashes = { sha256 = "ab214ba3eb3fe1d4b6a390bd5148f5c04aa8dddf7cd5388c57f859aa6c1790da" } }]
-
-[[packages]]
-name = "tqdm"
-version = "4.70.1"
-wheels = [{ url = "https://files.pythonhosted.org/packages/a7/03/921a3d3c75785aca9ebfbfcabfbc3a1be12e2ab5265deb026d55a5a3f83e/tqdm-4.70.1-py3-none-any.whl", upload-time = 2026-09-11T07:25:14Z, size = 80199, hashes = { sha256 = "c293e525e6fef9c20e8728fd4612df02a0aa31bb5fe91ecd93e123b1b7bffa73" } }]
 
 [[packages]]
 name = "typing-extensions"

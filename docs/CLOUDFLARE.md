@@ -4,10 +4,19 @@ This deployment keeps FastAPI, Python, LangChain, and the existing frontend.
 The original local server remains available with `pip install -r requirements-local.txt`
 and `uvicorn app.main:app --reload`.
 
-Validation: 78 automated tests pass. The deployment dry run passes, and
+Validation: 80 automated tests pass. The deployment dry run passes, and
 `scripts/check-cloudflare.py` passes against Wrangler's local Workers runtime and
 local D1, including page/assets routing and the four official provisioning cases.
 Live AI and remote deployment still require verification after deployment.
+
+The Worker uses a LangChain chat model with Cloudflare's native `fetch` transport
+for Groq/OpenAI-compatible requests. It does not initialize the Python OpenAI
+SDK or Python TLS contexts during requests. The local FastAPI server continues
+to use `langchain-openai`. Unconfigured AI skips model/tool construction.
+
+If Cloudflare returns error 1102, check the Worker's invocation logs for CPU or
+memory exhaustion. Local runtime success does not prove a hosted plan's resource
+budget is sufficient. The frontend reports these hosting failures explicitly.
 
 ## Storage and behavior
 

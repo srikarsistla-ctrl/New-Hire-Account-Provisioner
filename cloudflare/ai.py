@@ -1,20 +1,21 @@
 """Async LangChain calls for Workers. Bindings never enter browser assets."""
 import json
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
+from langchain_core.tools import tool
+from cloudflare.chat_model import WorkersChatModel
 from app.agent.recommender import Suggestions, SuggestedAssignment, fallback
 from app.agent.policy import allowed_roles, policy_document
 
 
 def model_for(env):
-    from langchain_openai import ChatOpenAI
     groq = getattr(env, 'GROQ_API_KEY', '')
     key = groq or getattr(env, 'OPENAI_API_KEY', '')
     if not key:
         return None
-    return ChatOpenAI(api_key=key,
+    return WorkersChatModel(api_key=key,
         base_url='https://api.groq.com/openai/v1' if groq else 'https://api.openai.com/v1',
         model=(getattr(env, 'GROQ_MODEL', '') or 'llama-3.3-70b-versatile') if groq else (getattr(env, 'OPENAI_MODEL', '') or 'gpt-4.1-mini'),
-        use_responses_api=False, temperature=0, timeout=20, max_retries=0)
+    )
 
 
 async def recommend(data, env):
@@ -45,9 +46,11 @@ async def recommend(data, env):
 
 
 async def review(state, hire, env):
-    from langchain_core.messages import ToolMessage
-    from langchain_core.tools import tool
     from cloudflare.state import inspect
+
+    # Avoid tool-schema construction entirely when no provider is configured.
+    if not (getattr(env, 'GROQ_API_KEY', '') or getattr(env, 'OPENAI_API_KEY', '')):
+        return
 
     @tool
     async def inspect_tool(tool_name: str) -> str:

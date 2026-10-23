@@ -193,3 +193,50 @@ def test_worker_ai_failure_uses_labeled_fallback(worker, hire_data, monkeypatch)
     assert response.status_code == 201
     assert response.json()['agent_mode'] == 'rules'
     assert 'unavailable' in response.json()['agent_note']
+
+
+def test_native_fetch_model_preserves_langchain_structured_output(hire_data, monkeypatch):
+    from cloudflare import ai, chat_model
+    from app.agent.validator import RecommendationInput
+
+    async def fake_completion(url, key, payload):
+        assert url == 'https://api.groq.com/openai/v1/chat/completions'
+        assert key == 'synthetic-test-key'
+        assert payload['tool_choice'] == 'required'
+        name = payload['tools'][0]['function']['name']
+        return {'choices': [{'message': {'content': None, 'tool_calls': [{
+            'id': 'suggestion-1', 'type': 'function', 'function': {'name': name,
+            'arguments': json.dumps({'assignments': [{'tool': 'github', 'role': 'editor',
+                'reason': 'Contribute code and review changes to the repositories.'}]})}}]}}]}
+
+    monkeypatch.setattr(chat_model, 'completion', fake_completion)
+    data = RecommendationInput.model_validate({k: v for k, v in hire_data.items() if k != 'assignments'} |
+        {'responsibilities': 'Contribute code and review pull requests.'})
+    suggestions, mode, note = asyncio.run(ai.recommend(data, SimpleNamespace(GROQ_API_KEY='synthetic-test-key')))
+    assert mode == 'ai', note
+    assert suggestions[0].tool == 'github' and suggestions[0].role == 'editor'
+
+
+def test_native_fetch_model_read_only_tool_loop(hire_data, monkeypatch):
+    from cloudflare import ai, chat_model
+    seen = []
+
+    async def fake_completion(url, key, payload):
+        seen.append(payload)
+        if len(seen) == 1:
+            return {'choices': [{'message': {'content': None, 'tool_calls': [{
+                'id': 'inspect-1', 'type': 'function', 'function': {'name': 'inspect_tool',
+                'arguments': '{"tool_name":"github"}'}}]}}]}
+        assert payload['messages'][-1]['role'] == 'tool'
+        assert payload['messages'][-1]['tool_call_id'] == 'inspect-1'
+        assert 'admin' in payload['messages'][-1]['content']
+        return {'choices': [{'message': {'content': 'The approved viewer role overrides the admin default.'}}]}
+
+    monkeypatch.setattr(chat_model, 'completion', fake_completion)
+    data = state.initial_state()
+    body = HireInput.model_validate(hire_data)
+    hire = state.create(data, body, body.assignments)
+    asyncio.run(ai.review(data, hire, SimpleNamespace(GROQ_API_KEY='synthetic-test-key')))
+    assert hire['agent_mode'] == 'ai'
+    assert len(seen) == 2
+    assert not state.inspect(data, 'github', body.email)['exists']
